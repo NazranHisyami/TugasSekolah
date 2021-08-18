@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      var bangundatar = prompt("Pilih Bangun Datar")
+      
+      switch(bangundatar){
+            case "persegi" :
+              alert("Rumus Luas Persegi: Sisi x Sisi")
+              var s1 = prompt("Masukkan sisi")
+              var s2 = prompt("Masukkan sisi")
+              function hitungPersegi(a,b){
+                  var hasil = (a*b);
+                  return hasil;
+              }
+              var nilai = hitungPersegi(s1,s2);
+              alert(nilai);
+              break;
+              
+            case "persegi panjang" :
+              alert("Rumus Luas Persegi Panjang: Panjang x Lebar")
+              var p = prompt("Masukkan Panjang")
+              var l = prompt("Masukkan Lebar")
+              function hitungPersegiPanjang(a,b){
+                  var hasil = (a*b);
+                  return hasil;
+              }
+              var nilai = hitungPersegiPanjang(p,l);
+              alert(nilai);
+              break;
+
+            case "segitiga" :
+              alert("Rumus Segitiga: 1/2 x a x t")
+              var a = prompt("Masukkan Alas")
+              var t = prompt("Masukkan Tinggi")
+              function hitungSegitiga(a,b,c){
+                  var hasil = (a*b*c);
+                  return hasil;
+              }
+              var nilai = hitungSegitiga(1/2,a,t);
+              alert(nilai);
+              break;
+
+            case "trapesium" :
+              alert("Rumus Luas Trapesium: 1/2 x (alas a + alas b) x t")
+              var a = prompt("Masukkan Alas a")
+              var b = prompt("Masukkan Alas b")
+              var t = prompt("Masukkan Tinggi")
+              function hitungTrapesium(a,b,c,d){
+                  var hasil = (a*(b+c)*d);
+                  return hasil;
+              }
+              var nilai = hitungTrapesium(1/2,a,b,t);
+              alert(nilai);
+              break;
+            
+            default:
+              alert("Tidak ditemukan, Silahkan coba lagi")
+              break;
+      }
+    </script>
+</body>
+</html>
