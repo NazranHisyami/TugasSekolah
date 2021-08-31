@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <title>Peminjaman Buku</title>
+    <style>
+        .keranjangbuku{
+          height: 45px;
+        }
+
+        .listbuku{
+          height: 45px;
+        }
+
+        .link{
+          padding: 15px;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="p-2 bg-dark text-white font-weight-bold">
+    <a href="Home Perpustakaan.html">Home</a> 
+    <a href="Prosedur Peminjaman Buku.html" class="link">Prosedur Peminjaman Buku</a>
+    <a href="Peminjaman Buku.html">Peminjaman Buku</a>
+    </div>
+    
+    <div class="p-2 mb-2 bg-dark text-white font-weight-bold"><h3>Peminjaman Buku</h3></div>
+    
+    <div class="listbuku bg-warning font-weight-bold rounded text-center pt-2 mb-2 mt-2"><h4>List Buku</h4></div>
+    
+    <div class="col-8,5" id="listproduk">
+
+    </div>
+    
+    <h2>Form Peminjaman Buku</h2>
+      
+    <form class="mt-4">
+      <div class="form-group">
+        <label for="exampleFormControlInput1"><h5>Nama Peminjam</h5></label>
+        <input type="text" class="form-control" id="txt_namapeminjam">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1"><h5>No Telpon</h5></label>
+        <input type="number" class="form-control" id="txt_notelpon">
+      </div>
+      
+      <div class="form-group">
+        <label for="exampleFormControlInput1"><h5>Tanggal Dipinjam</h5></label>
+        <input type="date" class="form-control" id="txt_tanggaldipinjam">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1"><h5>Batas Waktu Peminjaman</h5></label>
+        <input type="date" class="form-control" id="txt_bataswaktu">
+      </div>
+
+      <button class="btn btn-primary mb-3" onclick="add()">Simpan</button>
+    </form>
+      
+    <div class="listbuku bg-warning font-weight-bold rounded text-center pt-2 mb-2"><h5>Keranjang Buku</h5></div>
+      <div class="row">
+        <div class="listkeranjang" id="listkeranjang"></div>
+         <div class="col-sm">
+          <table width="100%">
+            <tbody id="tampildata">
+            </tbody>
+          </table>
+          <a href="Terimakasih.html"><button type="button" class="btn btn-large btn-block btn-warning font-weight-bold mt-2">Pinjam Buku</button></a>
+        </div>  
+      </div>
+    </div>
+  </div>
+    
+    <script>
+      var buku = ["Dragon Ball Super Volume 1", "Dragon Ball Super Volume 2", "Dragon Ball Super Volume 3", "Dragon Ball Super Volume 4", "Jujutsu Kaisen Volume 1", "Jujutsu Kaisen Volume 2", "Jujutsu Kaisen Volume 3", "Jujutsu Kaisen Volume 4", "Record of Ragnarok Volume 1", "Recors of Ragnarok Volume 2", "Record of Ragnarok Volume 5","Novel Rentang Waktu", "Novel Assassins Creed Unity", "Novel Assassins Creed Black Flag", "Assassins Creed Last Descendants", "Novel Assassins Creed Underworld", "Novel Percy Jackson The Lightning Thief", "Novel Percy Jackson Sea of Monsters"]
+
+      var gambar = [
+        "https://cf.shopee.co.id/file/30aae44f4c75708afd6ce054a3007c91", "https://cf.shopee.co.id/file/eddea58d0e86bd0e93ff2b177eefd5b1", "https://cf.shopee.co.id/file/9d622e891994b7156b8394e68b845773", "https://cf.shopee.co.id/file/2a70f3bef2a891cca3371c466ac83b3b", "https://cf.shopee.co.id/file/d18543c5c3a23d14a338f9152814e4f5", "https://images.tokopedia.net/img/cache/500-square/product-1/2020/2/6/29332871/29332871_4d026ce7-43a9-424e-8216-ae9e188cd6f6_1000_1000", "https://cdn.istyle.im/images/product/web/98/11/92/00/0/000000921198_01_800.jpg", "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/6/15/dbb8b35b-2b6e-4f75-a54d-2e9b433f96bb.jpg.webp", "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/4/6/31f55feb-d5dd-4488-ab50-c49e3faf46ad.jpg?ect=4g", "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/4/6/7a190027-97b6-43d0-9cef-c8fd1014f0a3.jpg.webp", "https://images.tokopedia.net/img/cache/200-square/VqbcmM/2021/6/25/ccc49b87-e593-4b27-a3d1-057d670a15ca.jpg.webp?ect=4g", "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//92/MTA-3058381/buka-buku_buka-buku-rentang-waktu-buku-novel_full02.jpg", "https://cf.shopee.co.id/file/4519d44e5603c500d489c78307193cc3", "https://s3.inkuiri.net/i/large/cf.shopee.co.id%2Ffile%2Fd9b16f45c13e90a4d3b66fdd5b1cb675", "https://cf.shopee.co.id/file/10712e051436a18a8ac251aad1528a43_tn", "https://images.tokopedia.net/img/cache/250-square/hDjmkQ/2020/11/30/05db351e-b0a9-44c5-93ac-f6751f786036.jpg", "https://cf.shopee.co.id/file/5c79d082463e6c963f6f6e1c3de5c4ec", "https://id-test-11.slatic.net/p/b7ffceddddc97b46b6e57d12673ae84d.jpg"
+      ]
+
+      var listproduk = document.getElementById('listproduk')
+      var listkeranjang = document.getElementById('listkeranjang')
+
+      var buku_keranjang = []
+      var gambar_keranjang = []
+
+      function showlistproduk() {
+        listproduk.innerHTML =''
+        
+        for (let i = 0; i < buku.length; i++) {
+          listproduk.innerHTML +='<div class="card float-left mr-2 mb-3 mt-2" style="width: 15rem;">'+
+            '<img src="'+gambar[i]+'"class="card-img-top" alt="...">'+
+            '<div class="card-body">'+
+              '<h5 class="card-title">'+buku[i]+'</h5>'+
+              '<p class="card-text"></p>'+
+              '<a href="#" class="btn btn-primary" onclick="addlistitem('+i+')">Masukkan Keranjang</a>'+
+            '</div>'+
+          '</div>'
+          }
+      }
+
+      function addlistitem(id) {
+        buku_keranjang.push(buku[id])
+        gambar_keranjang.push(gambar[id])
+
+        showlistkeranjang()
+      }
+
+      function showlistkeranjang() {
+        listkeranjang.innerHTML=''
+        
+        for (let i = 0; i < buku_keranjang.length; i++) {
+          listkeranjang.innerHTML += '<div class="col-sm">'+
+            '<div class="card" style="width: 40rem;">'+
+              '<div class="card-body">'+
+               '<h5 class="card-title">'+buku_keranjang[i]+'</h5>'+
+               '<p class="card-text">Jumlah Buku : 1</p>'+
+               '<a href="#" class="btn btn-danger float-right" onclick="deleteitem('+i+')">Hapus</a>'+
+              '</div>'+
+            '</div>'+
+          '</div>'
+        }
+      }
+
+      function deleteitem(id) {
+        buku_keranjang.splice(id,1)
+
+        showlistkeranjang()
+      }
+
+      showlistproduk()
+
+      var namapeminjam = []
+      var notelpon = []
+      var tanggaldipinjam = []
+      var bataswaktu = []
+
+      var tampil = document.getElementById('tampildata')
+
+      function showdata() {
+        tampil.innerHTML = ""
+
+        for(i = 0; i<namapeminjam.length; i++){
+          var nodata = i+1
+
+          tampil.innerHTML += '<tr class="bg-dark text-white">'+
+                '<td>Nama :</td>'+
+                '<td>"'+namapeminjam[i]+'"</td>'+
+              '</tr>'+
+              '<tr class="bg-dark text-white">'+
+                '<td>No Telpon :</td>'+
+                '<td>"'+notelpon[i]+'"</td>'+
+              '</tr>'+
+              '<tr class="bg-dark text-white">'+
+                '<td>Tanggal Dipinjam :</td>'+
+                '<td>"'+tanggaldipinjam[i]+'"</td>'+
+              '</tr>'+
+              '<tr class="bg-dark text-white">'+
+                '<td>Batas Waktu Peminjaman :</td>'+
+                '<td>"'+bataswaktu[i]+'"</td>'+
+              '</tr>'
+            }
+          }
+
+      showdata()
+
+      function add() {
+        var namapeminjambaru = document.getElementById('txt_namapeminjam').value
+        var notelponbaru = document.getElementById('txt_notelpon').value
+        var tanggaldipinjambaru = document.getElementById('txt_tanggaldipinjam').value
+        var bataswaktubaru = document.getElementById('txt_bataswaktu').value
+
+        namapeminjam.push(namapeminjambaru)
+        notelpon.push(notelponbaru)
+        tanggaldipinjam.push(tanggaldipinjambaru)
+        bataswaktu.push(bataswaktubaru)
+
+        showdata()
+      }
+    </script>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
